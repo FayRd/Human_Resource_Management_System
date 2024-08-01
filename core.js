@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const { name } = require('ejs');
 
 const app = express();
-const PORT = 3000;
 
 // View engine setup
 app.set('view engine', 'ejs');
@@ -826,5 +825,5 @@ app.get('/Announcement/:id/Delete', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
+  console.log(`Server running at https://human-resource-management-system-2byb.onrender.com/`);
 });

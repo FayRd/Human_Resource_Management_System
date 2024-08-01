@@ -18,10 +18,14 @@ app.use(express.static('public'));
 
 // Create MySQL connection
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'hr_manager',
+  // host: 'localhost',
+  // user: 'root',
+  // password: '',
+  // database: 'hr_manager',
+  host: 'mysql-hrmanagement.alwaysdata.net',
+  user: '371139',
+  password: 'Number!^16',
+  database: 'hrmanagement_1',
 });
 
 connection.connect((err) => {

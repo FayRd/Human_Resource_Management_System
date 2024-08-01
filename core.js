@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const { name } = require('ejs');
 
 const app = express();
+const PORT = 3000;
 
 // View engine setup
 app.set('view engine', 'ejs');

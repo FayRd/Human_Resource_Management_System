@@ -272,7 +272,6 @@ app.get('/Employee/:id/Delete', (req, res) => {
 app.get('/Employee/:id/:proid/Delete', (req, res) => {
   const employeeId = parseInt(req.params.id);
   const programmeId = parseInt(req.params.proid);
-  console.log(`/Employee/${employeeId}/${programmeId}/Delete`);
   const sql = `DELETE FROM employee_has_programme WHERE employee = ? AND programme = ?;`;
   connection.query(sql, [employeeId, programmeId], (err, results) => {
     if (err) {
@@ -318,7 +317,6 @@ app.post('/Document/Edit', (req, res) => {
       names[id] = req.body[key];
     }
   }
-  console.log(names);
   // Obtaining the last parameter (newName)
   let newName = req.body.newName;
   newName = newName === '' ? null : newName;
@@ -342,7 +340,6 @@ app.post('/Document/Edit', (req, res) => {
         console.error(`Database query error: ${err.message}`);
         return res.status(500).send(`Error getting folder id!`);
       }
-      console.log(results[0])
       let folderId = (results[0] === undefined) ? 1 : results[0].id + 1;
       const path = `./public/hr_folders/${folderId}`;
       console.log(path);
@@ -441,22 +438,19 @@ app.post('/Document/:id/Edit', upload.single('fileUpload'), (req, res) => {
       names[nameNumber] = req.body[key];
     }
   }
-  console.log(names);
   // Updating the Folders
   if (names.length !== 0) {
     for (let key in names) {
       const sql1 = `SELECT name FROM files WHERE id = ?;`;
       const sql2 = `UPDATE files SET name = ? WHERE id = ?;`;
       let currPath; let newPath;
-      console.log(sql1);
-      console.log(sql2);
       connection.query(sql1, [key], (err, results) => {
         if (err) {
           console.error(`Database query error: ${err.message}`);
           return res.status(500).send(`Error getting file names!`);
         }
         currPath = `./public/hr_folders/${folderId}/${results[0].name}`
-        console.log(currPath);
+        console.log(`Current Path: ${currPath}`);
         connection.query(sql2, [names[key], key], (err, results) => {
           if (err) {
             console.error(`Database query error: ${err.message}`);
@@ -464,7 +458,7 @@ app.post('/Document/:id/Edit', upload.single('fileUpload'), (req, res) => {
           }
           // Change file name
           newPath = `./public/hr_folders/${folderId}/${names[key]}`
-          console.log(newPath);
+          console.log(`New Path: ${newPath}`);
           fs.rename(currPath, newPath, (err) => {
             if (err) {
               console.error(`Error renaming file: ${err}`);
@@ -659,7 +653,6 @@ app.get('/ProgrammeCategory/:id', (req, res) => {
 
 app.post('/ProgrammeCategory/:id/Add', (req, res) => {
   const categoryId = parseInt(req.params.id);
-  console.log(categoryId);
   const { newName, newDuration, newLead, newLessons } = req.body;
   const sql = `INSERT INTO programmes (category, name, lead, lessons, duration) VALUES (?, ?, ?, ?, ?);`;
   connection.query(sql, [categoryId, newName, newLead, newLessons, newDuration], (err, results) => {

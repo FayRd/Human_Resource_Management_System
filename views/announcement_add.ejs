@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Announcement</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <main class="main-content">
+      <!-- Navbar -->
+      <%- include ('partials/navbar.ejs') %>
+        <!-- Breadcrumb -->
+        <div>
+          <nav aria-label="breadcrumb">
+            <ol class="px-4 breadcrumb c-pri-bg rounded-bottom">
+              <li class="breadcrumb-item"><a class="white-txt"
+                  href="/">Home</a></li>
+              <li class="breadcrumb-item"><a class="white-txt"
+                  href="/Announcement">Announcements</a></li>
+              <li class="breadcrumb-item white-txt"
+                aria-current="page">Add</li>
+            </ol>
+          </nav>
+        </div>
+      <!-- Announcement -->
+      <section>
+        <div class="container-fluid mb-4 mx-auto ">
+          <h2><svg class="svg-icon" viewBox="0 0 20 20"><path d="M17.896,12.706v-0.005v-0.003L15.855,2.507c-0.046-0.24-0.255-0.413-0.5-0.413H4.899c-0.24,0-0.447,0.166-0.498,0.4L2.106,12.696c-0.008,0.035-0.013,0.071-0.013,0.107v4.593c0,0.28,0.229,0.51,0.51,0.51h14.792c0.28,0,0.51-0.229,0.51-0.51v-4.593C17.906,12.77,17.904,12.737,17.896,12.706 M5.31,3.114h9.625l1.842,9.179h-4.481c-0.28,0-0.51,0.229-0.51,0.511c0,0.703-1.081,1.546-1.785,1.546c-0.704,0-1.785-0.843-1.785-1.546c0-0.281-0.229-0.511-0.51-0.511H3.239L5.31,3.114zM16.886,16.886H3.114v-3.572H7.25c0.235,1.021,1.658,2.032,2.75,2.032c1.092,0,2.515-1.012,2.749-2.032h4.137V16.886z"></path></svg>Announcements</h2>
+          <div class="p-4 mx-auto border border-2 border-dark-subtle rounded text-bg-dark shadow">
+            <form action="/Announcement/Add" method="POST">
+              <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Announcement Title" name="newTitle">
+              </div>
+              <div class="mb-3">
+                <label for="main" class="form-label">Body</label>
+                <textarea class="form-control" id="main" rows="7" name="newBody"></textarea>
+              </div>
+              <button type="submit" class="btn btn-outline-light mt-2">Submit</button>
+            </form>
+          </div>
+        </div>
+      </section>
+      </main>
+      <footer>
+        <%- include ('partials/footer.ejs') %>
+      </footer>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+      <script src="/app.js"></script>
+    </body>
+  </html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Repository</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous">
+      <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <main class="main-content">
+      <!-- Navbar -->
+      <%- include ('partials/navbar.ejs') %>
+      <!-- Breadcrumb -->
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="px-4 breadcrumb c-pri-bg rounded-bottom">
+            <li class="breadcrumb-item"><a class="white-txt"
+                href="/">Home</a></li>
+            <li class="breadcrumb-item white-txt"
+              aria-current="page">Documents</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- Main -->
+        <div class="container-fluid px-4 my-1">
+          <h2 class="mb-3"><svg class="svg-icon" viewBox="0 0 20 20">
+              <path
+                d="M15.475,6.692l-4.084-4.083C11.32,2.538,11.223,2.5,11.125,2.5h-6c-0.413,0-0.75,0.337-0.75,0.75v13.5c0,0.412,0.337,0.75,0.75,0.75h9.75c0.412,0,0.75-0.338,0.75-0.75V6.94C15.609,6.839,15.554,6.771,15.475,6.692 M11.5,3.779l2.843,2.846H11.5V3.779z M14.875,16.75h-9.75V3.25h5.625V7c0,0.206,0.168,0.375,0.375,0.375h3.75V16.75z"></path>
+            </svg>Documents</h2>
+          <!-- Edit Button -->
+          <div style="display: flex; width: 100%; justify-content: space-between;">
+            <a href="/EditDocument" class="btn btn-dark mb-2 h-50">Edit</a>          
+            <input type="text" class="form-control mb-3 w-25" id="folder-search" onkeyup="filterTable()" placeholder="Search for folder by name">
+          </div>
+          <table class="table table-hover" id="myTable">
+            <tr>
+              <th width="70%">Name</th><th>Total Size</th><th>Type</th>
+            </tr>
+            <% if (documentFolders.length === 0) { %> <tr><td colspan="6" class="text-center">No Records Found</td></tr> <% } %>
+            <% for (let i=0; i<documentFolders.length; i++) { %>
+              <tr>
+                <td><svg class="svg-icon d-folder" viewBox="0 0 20 20">
+                    <path
+                      d="M17.927,5.828h-4.41l-1.929-1.961c-0.078-0.079-0.186-0.125-0.297-0.125H4.159c-0.229,0-0.417,0.188-0.417,0.417v1.669H2.073c-0.229,0-0.417,0.188-0.417,0.417v9.596c0,0.229,0.188,0.417,0.417,0.417h15.854c0.229,0,0.417-0.188,0.417-0.417V6.245C18.344,6.016,18.156,5.828,17.927,5.828 M4.577,4.577h6.539l1.231,1.251h-7.77V4.577z M17.51,15.424H2.491V6.663H17.51V15.424z"></path>
+                  </svg><a
+                    class="link-primary link-underline-opacity-50-hover link-underline-opacity-0"
+                    href="/Document/<%=documentFolders[i].folderId%>"><%=documentFolders[i].folderName%></a></td><td><% if (documentFolders[i].folderSize !== null) { %> <%=documentFolders[i].folderSize%> <% } else { %> 0 <% } %> MB</td><td>Folder</td>
+              </tr>
+            <% } %>
+          </table>
+      </main>
+      <footer>
+        <%- include ('partials/footer.ejs') %>
+      </footer>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+        <script>
+          function filterTable() {
+            // Declare variables
+            const input = document.getElementById('folder-search');
+            const table = document.getElementById("myTable");
+            const tr = table.getElementsByTagName('tr');
+    
+            for (let i = 0; i < tr.length; i++) {
+              // Get the text content of the current table cell
+              const firstTd = tr[i].querySelector("td:nth-child(1)");
+              const a = (firstTd) ? firstTd.querySelector("a") : null;
+              const tdText = (a) ? a.textContent : "";
+              // Convert the text to uppercase for case-insensitive matching
+              const searchQuery = input.value.toUpperCase();
+    
+              // Check if the text content of the second table cell contains the search query (case-insensitive)
+              if (tdText.toUpperCase().indexOf(searchQuery) > -1) {
+                tr[i].style.display = ""; // Display the table row
+              } else if (tr[i].getElementsByTagName('th').length > 0) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none"; // Hide the table row
+              }
+            }
+          }
+    
+          input.addEventListener("input", filterTable);
+        </script>
+    </body>
+  </html>

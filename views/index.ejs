@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <main>
+    <!-- Navbar -->
+    <%- include ('partials/navbar.ejs') %>
+        <!-- Breadcrumb -->
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="px-4 breadcrumb c-pri-bg rounded-bottom">
+            <li class="breadcrumb-item white-txt" aria-current="page">Home</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- Announcement -->
+      <section>
+        <div class="container-fluid row mb-4 mx-auto">
+          <h2><svg class="svg-icon" viewBox="0 0 20 20">
+              <path
+                d="M17.896,12.706v-0.005v-0.003L15.855,2.507c-0.046-0.24-0.255-0.413-0.5-0.413H4.899c-0.24,0-0.447,0.166-0.498,0.4L2.106,12.696c-0.008,0.035-0.013,0.071-0.013,0.107v4.593c0,0.28,0.229,0.51,0.51,0.51h14.792c0.28,0,0.51-0.229,0.51-0.51v-4.593C17.906,12.77,17.904,12.737,17.896,12.706 M5.31,3.114h9.625l1.842,9.179h-4.481c-0.28,0-0.51,0.229-0.51,0.511c0,0.703-1.081,1.546-1.785,1.546c-0.704,0-1.785-0.843-1.785-1.546c0-0.281-0.229-0.511-0.51-0.511H3.239L5.31,3.114zM16.886,16.886H3.114v-3.572H7.25c0.235,1.021,1.658,2.032,2.75,2.032c1.092,0,2.515-1.012,2.749-2.032h4.137V16.886z">
+              </path>
+            </svg>Latest Announcements</h2>
+          <div class="px-4 my-1 col-lg-8 mb-3 mb-sm-0" style="min-height: 620px;">
+            <ul class="mt-4 px-2 list-group" style="list-style-type: none;">
+              <% for (let i=0; i<3; i++) { %>
+                <% if (i===announcements.length) { break } %>
+                <li class="mb-2">
+                  <div class="card mb-2 border-0 border-start border-3 border-primary bg-dark text-bg-dark">
+                    <div class="card-body">
+                      <h5 class="card-title"><%=announcements[i].title%></h5>
+                      <p class="card-text col-12 text-truncate"><%=announcements[i].body%></p>
+                      <figcaption class="blockquote-footer"><% if (announcements[i].firstName !== null) { %> <%=announcements[i].firstName%> <% } else { %> [DELETED EMPLOYEE] <% } %> | <%=announcements[i].dateCreated.toLocaleDateString('en-SG', { weekday: 'long', year: 'numeric', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', timeZone: 'Asia/Singapore' })%></figcaption>
+                      <a href="/Announcement/<%=announcements[i].id%>" class="btn btn-outline-secondary">View</a>
+                    </div>
+                  </div>
+                </li>
+                <% } %>
+            </ul>
+            <div class="btn-group mx-2 mb-3 shadow-sm" role="group" aria-label="announcement">
+              <a href="/Announcement" type="button" class="btn btn-outline-dark">View All</a>
+              <a href="/Announcement/Add" type="button" class="btn btn-dark">Create</a>
+            </div>
+          </div>
+          <!-- Schedule -->
+          <div class="px-4 my-auto col-lg-4">
+            <div class="border rounded-top p-3 shadow-sm">
+              <h5>Today's Date:</h5>
+              <p id="timeNow">Retrieving Time..</p>
+            </div>
+            <div class="accordion accordion-flush border border-2 shadow-sm" id="schedule-flush">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#schedule-flush-1" aria-expanded="false" aria-controls="schedule-flush-1">
+                    Last 7 Days
+                  </button>
+                </h2>
+                <div id="schedule-flush-1" class="accordion-collapse collapse" data-bs-parent="#schedule-flush">
+                  <div class="accordion-body text-center">No records found</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#schedule-flush-2" aria-expanded="true" aria-controls="schedule-flush-2">
+                    Today
+                  </button>
+                </h2>
+                <div id="schedule-flush-2" class="accordion-collapse collapse show" data-bs-parent="#schedule-flush">
+                  <div class="accordion-body text-center">No records found</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#schedule-flush-3" aria-expanded="false" aria-controls="schedule-flush-3">
+                    Next 7 Days
+                  </button>
+                </h2>
+                <div id="schedule-flush-3" class="accordion-collapse collapse" data-bs-parent="#schedule-flush">
+                  <div class="accordion-body text-center">No records found</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Divider -->
+      <div class="border"></div>
+      <section>
+        <div class="container-fluid my-4">
+        </div>
+      </section>
+      <!-- Card Links -->
+      <section>
+        <div class="container-fluid">
+          <div class="row mb-4 mx-auto">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+              <div class="card shadow-sm h-100">
+                <div class="card-body">
+                  <a href="/Employee" class="btn btn-outline-dark card-button">
+                    <h5 class="card-title">Manage Employees</h5>
+                    <p class="card-text">Add, modify, and delete employee
+                      info.</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 mb-sm-0">
+              <div class="card shadow-sm h-100">
+                <div class="card-body">
+                  <a href="/Document" class="btn btn-outline-dark card-button">
+                    <h5 class="card-title">View Documents</h5>
+                    <p class="card-text">View and edit Human Resources
+                      documents.</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mx-auto">
+            <div class="col-sm-12 mb-3 mb-sm-0">
+              <div class="card shadow-sm h-100">
+                <div class="card-body">
+                  <a href="/ProgrammeCategory" class="btn btn-outline-dark card-button">
+                    <h5 class="card-title">Manage Programmes</h5>
+                    <p class="card-text">Add, modify, view, and delete
+                      programmes.</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+  </main>
+  <footer>
+    <%- include ('partials/footer.ejs') %>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="/app.js"></script>
+</body>
+
+</html>
